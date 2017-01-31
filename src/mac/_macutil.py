@@ -40,7 +40,7 @@ kIOBluetoothUserNotificationChannelDirectionIncoming = 1
 kBluetoothHCIErrorPageTimeout = 0x04   # <IOBluetooth/Bluetooth.h>
 
 # defined in <IOBluetooth/IOBluetoothUserLib.h>
-kIOBluetoothServiceBrowserControllerOptionsNone = 0L
+kIOBluetoothServiceBrowserControllerOptionsNone = 0
 
 
 LIGHTBLUE_NOTIFY_ID = 5444 # any old number

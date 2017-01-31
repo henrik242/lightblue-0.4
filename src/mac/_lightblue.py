@@ -57,7 +57,7 @@ def findservices(addr=None, name=None, servicetype=None):
     if addr is None:
         try:
             founddevices = finddevices()
-        except _lightbluecommon.BluetoothError, e:
+        except _lightbluecommon.BluetoothError as e:
             msg = "findservices() failed, " +\
                     "error while finding devices: " + str(e)
             raise _lightbluecommon.BluetoothError(msg)
@@ -82,7 +82,7 @@ def findservices(addr=None, name=None, servicetype=None):
                 serviceupdater = _SDPQueryRunner.alloc().init()
                 try:
                     serviceupdater.query(iobtdevice)  # blocks until updated
-                except _lightbluecommon.BluetoothError, e:
+                except _lightbluecommon.BluetoothError as e:
                     msg = "findservices() couldn't get services for %s: %s" % \
                         (iobtdevice.getNameOrAddress(), str(e))
                     warnings.warn(msg)
