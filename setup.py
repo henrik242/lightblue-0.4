@@ -41,6 +41,7 @@ setup(name="lightblue",
     license="GPL",
     packages=["lightblue"],
     package_dir={"lightblue":getpackagedir()},
+    use_2to3=True,
     ext_modules=getextensions(),
     classifiers = [ "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
@@ -63,4 +64,4 @@ if MAC:
     if "install" in sys.argv:
         import os
         os.chdir("src/mac/LightAquaBlue")
-        os.system("xcodebuild install -arch 'i386' -target LightAquaBlue -configuration Release DSTROOT=/ INSTALL_PATH=/Library/Frameworks DEPLOYMENT_LOCATION=YES")
+        os.system("xcodebuild install -arch 'x86_64' -target LightAquaBlue -configuration Release DSTROOT=/ INSTALL_PATH=/Library/Frameworks DEPLOYMENT_LOCATION=YES")
