@@ -32,7 +32,7 @@ def getextensions():
 
 # install the main library
 setup(name="lightblue",
-    version="0.4",
+    version="0.4.1",
     author="Bea Lam",
     author_email="blammit@gmail.com",
     url="http://lightblue.sourceforge.net",
