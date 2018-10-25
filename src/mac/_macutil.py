@@ -36,12 +36,11 @@ except:
 # values of constants used in _IOBluetooth.framework 
 kIOReturnSuccess = 0       # defined in <IOKit/IOReturn.h>
 kIOBluetoothUserNotificationChannelDirectionIncoming = 1
-        # defined in <IOBluetooth/IOBluetoothUserLib.h>
+# defined in <IOBluetooth/IOBluetoothUserLib.h>
 kBluetoothHCIErrorPageTimeout = 0x04   # <IOBluetooth/Bluetooth.h>
 
 # defined in <IOBluetooth/IOBluetoothUserLib.h>
 kIOBluetoothServiceBrowserControllerOptionsNone = 0
-
 
 LIGHTBLUE_NOTIFY_ID = 5444 # any old number
 WAIT_MAX_TIMEOUT = 3
