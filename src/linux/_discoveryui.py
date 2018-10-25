@@ -17,7 +17,7 @@
 
 try:
     from Tkinter import *
-except ImportError, e:
+except ImportError as e:
     raise ImportError("Error loading GUIs for selectdevice() and selectservice(), Tkinter not found: " + str(e))
 
 # Provides services for controlling a listbox, tracking selections, etc.
@@ -356,7 +356,7 @@ class DeviceSelector(Frame):
 
             # run gui event loop
             self.mainloop()
-        except Exception, e:
+        except Exception as e:
             print "Warning: error during device selection:", e
 
     def _trackselections(self, track):

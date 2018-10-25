@@ -77,7 +77,7 @@ class FTPClient(object):
         print 'Sending %s...' % filename
         try:
             f = file(filename, 'rb')
-        except Exception, e:
+        except Exception as e:
             print "Cannot open file %s" % filename
             return
         response = self.client.put({'name': os.path.basename(filename)}, f)
@@ -122,7 +122,7 @@ class FTPClient(object):
         import xml.parsers.expat
         try:
             dom = xml.dom.minidom.parseString(xmldata)
-        except xml.parsers.expat.ExpatError, e:
+        except xml.parsers.expat.ExpatError as e:
             print "Error parsing folder-listing XML (%s): '%s'" % \
                 (str(e), xmldata)
             return []
@@ -204,7 +204,7 @@ def main():
     finally:
         try:
             ftpclient.disconnect()
-        except Exception, e:
+        except Exception as e:
             print "Error while disconnecting:", e
             pass
 

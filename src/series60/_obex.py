@@ -32,7 +32,7 @@ def sendfile(address, channel, source):
     if isinstance(source, types.StringTypes):
         try:
             _socket.bt_obex_send_file(address, channel, unicode(source))
-        except Exception, e:
+        except Exception as e:
             raise OBEXError(str(e))
     else:
         # given file object
@@ -48,14 +48,14 @@ def sendfile(address, channel, source):
             f.close()
             try:            
                 _socket.bt_obex_send_file(address, channel, unicode(localpath))
-            except Exception, e:
+            except Exception as e:
                 raise OBEXError(str(e))                
         finally:
             # remove temporary file
             if os.path.isfile(localpath):
                 try:
                     os.remove(localpath)
-                except Exception, e:
+                except Exception as e:
                     print "[lightblue.obex] unable to remove temporary file %s: %s" %\
                         (localpath, str(e))
 
@@ -81,7 +81,7 @@ def recvfile(sock, dest):
             if os.path.isfile(localpath):
                 try:
                     os.remove(localpath)
-                except Exception, e:
+                except Exception as e:
                     print "[lightblue.obex] unable to remove temporary file %s: %s" %\
                         (localpath, str(e))
         
@@ -104,7 +104,7 @@ def _recvfile(sock, localpath):
         # receive a file (get internal _sock cos sock is our own SocketWrapper
         # object)
         _socket.bt_obex_receive(sock._sock, unicode(localpath))
-    except _socket.error, e:
+    except _socket.error as e:
         try:
             if temppath is not None:
                 # recv failed, put original file back

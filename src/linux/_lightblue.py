@@ -23,7 +23,7 @@ try:
         import _bluetooth   # pybluez internal implementation module
     except:
         import bluetooth._bluetooth as _bluetooth
-except ImportError, e:
+except ImportError as e:
     raise ImportError("LightBlue requires PyBluez to be installed, " + \
         "cannot find PyBluez 'bluetooth' module: " + str(e))
 
@@ -67,7 +67,7 @@ def findservices(addr=None, name=None, servicetype=None):
             servicetype)
     try:
         services = bluetooth.find_service(name=name, uuid=uuid, address=addr)
-    except bluetooth.BluetoothError, e:
+    except bluetooth.BluetoothError as e:
         raise _lightbluecommon.BluetoothError(str(e))
 
     if servicetype == _lightbluecommon.RFCOMM:
@@ -105,7 +105,7 @@ def gethostaddr():
     try:
         try:
             addr = _lightblueutil.hci_read_bd_addr(sock.fileno(), 1000)
-        except IOError, e:
+        except IOError as e:
             raise _lightbluecommon.BluetoothError(str(e))
     finally:
         sock.close()
@@ -118,7 +118,7 @@ def gethostclass():
     try:
         try:
             cod = _lightblueutil.hci_read_class_of_dev(sock.fileno(), 1000)
-        except IOError, e:
+        except IOError as e:
             raise _lightbluecommon.BluetoothError(str(e))
     finally:
         sock.close()
@@ -131,7 +131,7 @@ def _gethostname():
     try:
         try:
             name = _lightblueutil.hci_read_local_name(sock.fileno(), 1000)
-        except IOError, e:
+        except IOError as e:
             raise _lightbluecommon.BluetoothError(str(e))
     finally:
         sock.close()
@@ -153,9 +153,9 @@ class _SocketWrapper(object):
             # access _sock._sock (i.e. pybluez socket's internal sock)
             # this is so we can raise timeout errors with a different exception
             conn, addr = self._sock._sock.accept()
-        except _bluetooth.timeout, te:
+        except _bluetooth.timeout as te:
             raise _socket.timeout(str(te))
-        except _bluetooth.error, e:
+        except _bluetooth.error as e:
             raise _socket.error(str(e))
 
         # return new _SocketWrapper that wraps a new BluetoothSocket
@@ -186,9 +186,9 @@ class _SocketWrapper(object):
     _methoddef = """def %s(self, *args, **kwargs):
         try:
             return self._sock._sock.%s(*args, **kwargs)
-        except _bluetooth.timeout, te:
+        except _bluetooth.timeout as te:
             raise _socket.timeout(str(te))
-        except _bluetooth.error, e:
+        except _bluetooth.error as e:
             raise _socket.error(str(e))
         %s.__doc__ = _lightbluecommon._socketdocs['%s']\n"""
     for _m in ("connect", "send", "recv"):
@@ -201,7 +201,7 @@ class _SocketWrapper(object):
     _methoddef = """def %s(self, *args, **kwargs):
         try:
             return self._sock.%s(*args, **kwargs)
-        except _bluetooth.error, e:
+        except _bluetooth.error as e:
             raise _socket.error(str(e))
         %s.__doc__ = _lightbluecommon._socketdocs['%s']\n"""
     for _m in _othermethods:
@@ -247,7 +247,7 @@ def advertise(servicename, sock, serviceclass):
                 "should be either RFCOMM or OBEX constants")
         # set flag
         sock._advertised = True
-    except bluetooth.BluetoothError, e:
+    except bluetooth.BluetoothError as e:
         raise _lightbluecommon.BluetoothError(str(e))
 
 
@@ -256,7 +256,7 @@ def stopadvertise(sock):
         raise _lightbluecommon.BluetoothError("no service advertised")
     try:
         bluetooth.stop_advertising(sock._sock)
-    except bluetooth.BluetoothError, e:
+    except bluetooth.BluetoothError as e:
         raise _lightbluecommon.BluetoothError(str(e))
     sock._advertised = False
 
@@ -292,7 +292,7 @@ class _SyncDeviceInquiry(object):
 
             # block until inquiry finishes
             self._inquiry.process_inquiry()
-        except bluetooth.BluetoothError, e:
+        except bluetooth.BluetoothError as e:
             try:
                 self._inquiry.cancel_inquiry()
             finally:
@@ -362,7 +362,7 @@ def _isobexservice(service):
 def _gethcisock(devid=-1):
     try:
         sock = _bluetooth.hci_open_dev(devid)
-    except Exception, e:
+    except Exception as e:
         raise _lightbluecommon.BluetoothError(
             "Cannot access local device: " + str(e))
     return sock

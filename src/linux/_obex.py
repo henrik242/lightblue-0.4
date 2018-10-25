@@ -57,7 +57,7 @@ class OBEXClient(object):
         try:
             resp = self.__client.request(_lightblueobex.CONNECT,
                     self.__convertheaders(headers), None)
-        except IOError, e:
+        except IOError as e:
             raise OBEXError(str(e))
 
         result = self.__createresponse(resp)
@@ -74,7 +74,7 @@ class OBEXClient(object):
             try:
                 resp = self.__client.request(_lightblueobex.DISCONNECT,
                         self.__convertheaders(headers), None)
-            except IOError, e:
+            except IOError as e:
                 raise OBEXError(str(e))
         finally:
             # close bt connection regardless of disconnect response
@@ -90,7 +90,7 @@ class OBEXClient(object):
         try:
             resp = self.__client.request(_lightblueobex.PUT,
                     self.__convertheaders(headers), None, fileobj)
-        except IOError, e:
+        except IOError as e:
             raise OBEXError(str(e))
         return self.__createresponse(resp)
 
@@ -100,7 +100,7 @@ class OBEXClient(object):
         try:
             resp = self.__client.request(_lightblueobex.PUT,
                     self.__convertheaders(headers), None)
-        except IOError, e:
+        except IOError as e:
             raise OBEXError(str(e))
         return self.__createresponse(resp)
 
@@ -112,7 +112,7 @@ class OBEXClient(object):
         try:
             resp = self.__client.request(_lightblueobex.GET,
                     self.__convertheaders(headers), None, fileobj)
-        except IOError, e:
+        except IOError as e:
             raise OBEXError(str(e))
         return self.__createresponse(resp)
 
@@ -129,7 +129,7 @@ class OBEXClient(object):
         try:
             resp = self.__client.request(_lightblueobex.SETPATH,
                     self.__convertheaders(headers), buffer(setpathdata))
-        except IOError, e:
+        except IOError as e:
             raise OBEXError(str(e))
         return self.__createresponse(resp)
 
@@ -141,11 +141,11 @@ class OBEXClient(object):
             try:
                 self.__sock.connect((self.__serveraddr[0],
                                      self.__serveraddr[1]))
-            except bluetooth.BluetoothError, e:
+            except bluetooth.BluetoothError as e:
                 raise OBEXError(str(e))
             try:
                 self.__client = _lightblueobex.OBEXClient(self.__sock.fileno())
-            except IOError, e:
+            except IOError as e:
                 raise OBEXError(str(e))
 
     def __closetransport(self):

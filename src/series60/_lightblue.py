@@ -71,7 +71,7 @@ def findservices(addr=None, name=None, servicetype=None):
         for func in funcs:
             try:
                 devaddr, servicesdict = func(addr)
-            except _socket.error, e:
+            except _socket.error as e:
                 #raise _lightbluecommon.BluetoothError(str(e))
                 print "[lightblue] cannot look up services for %s" % addr
                 continue
@@ -94,7 +94,7 @@ def finddevicename(address, usecache=True):
         import _lightblueutil        
         address_no_sep = address.replace(":", "").replace("-", "")
         name = _lightblueutil.lookupName(address_no_sep, (not usecache))
-    except SymbianError, e:
+    except SymbianError as e:
         raise _lightbluecommon.BluetoothError(
             "Cannot find device name for %s: %s" % (address, str(e)))
     return name
@@ -103,7 +103,7 @@ def gethostaddr():
     import _lightblueutil
     try:
         addr = _lightblueutil.getLocalAddress()
-    except SymbianError, exc:
+    except SymbianError as exc:
         raise _lightbluecommon.BluetoothError(
             "Cannot read local device address: " + str(exc))
     return addr
@@ -112,7 +112,7 @@ def gethostclass():
     import _lightblueutil
     try:
         cod = _lightblueutil.getLocalDeviceClass()
-    except SymbianError, exc:
+    except SymbianError as exc:
         raise _lightbluecommon.BluetoothError(
             "Cannot read local device class: " + str(exc))
     return cod
@@ -121,7 +121,7 @@ def _gethostname():
     import _lightblueutil
     try:
         name = _lightblueutil.getLocalName()
-    except SymbianError, exc:
+    except SymbianError as exc:
         raise _lightbluecommon.BluetoothError(
             "Cannot read local device name: " + str(exc))
     return name
@@ -148,7 +148,7 @@ class _SocketWrapper(object):
             addr = (addr[0], _getavailableport(self))
         try:
             self._sock.bind(addr)
-        except Exception, e:
+        except Exception as e:
             raise _socket.error(str(e))
         self._setconnaddr(addr)
     bind.__doc__ = _lightbluecommon._socketdocs["bind"]
@@ -171,7 +171,7 @@ class _SocketWrapper(object):
     def connect_ex(self, addr): 
         try:
             self.connect(addr)
-        except _socket.error, e:
+        except _socket.error as e:
             return e.args[0]
         return 0
     connect_ex.__doc__ = _lightbluecommon._socketdocs["connect_ex"]                
@@ -302,7 +302,7 @@ def selectdevice():
     import _lightblueutil
     try:
         result = _lightblueutil.selectDevice()
-    except SymbianError, e:
+    except SymbianError as e:
         raise _lightbluecommon.BluetoothError(str(e))
         
     # underlying method returns class of device as tuple, not whole class
@@ -384,7 +384,7 @@ class _DeviceInquiry(object):
                 else:
                     print "[lightblue] device discovery error (%d)" % err
                     
-        except Exception, e:
+        except Exception as e:
             # catch all exceptions, the app will crash if exception is raised
             # during callback
             print "Error during _founddevice() callback: "+ str(e)
